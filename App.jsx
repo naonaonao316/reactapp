@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 class App extends React.Component {
@@ -6,20 +7,28 @@ class App extends React.Component {
      super(props);
 
      this.state = {
-        data: 'Initial data...'
+        data: ''
      }
      this.updateState = this.updateState.bind(this);
+     this.clearInput = this.clearInput.bind(this);
   };
 
-  updateState() {
-     this.setState({data: 'Data updated from the child component...'})
+  updateState(e) {
+     this.setState({data: e.target.value});
+  }
+
+  clearInput() {
+     this.setState({data: ''});
+     ReactDOM.findDOMNode(this.refs.myInput).focus();
   }
 
   render() {
      return (
         <div>
-          <Content myDataProp = {this.state.data}
-             updateStateProp = {this.updateState}></Content>
+          <input value = {this.state.data} onChange = {this.updateState}
+             ref = "myInput"></input>
+          <button onClick = {this.clearInput}>CLEAR</button>
+          <h4>{this.state.data}</h4>
         </div>
      );
   }
