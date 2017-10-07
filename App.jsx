@@ -3,67 +3,26 @@ import PropTypes from 'prop-types';
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
+     super(props);
 
-    this.state = {
-      data: 0
-    }
+     this.state = {
+        data: 'Initial data...'
+     }
 
-    this.setNewNumber = this.setNewNumber.bind(this)
+     this.updateState = this.updateState.bind(this);
+
   };
 
-  setNewNumber() {
-    this.setState({data: this.state.data + 1})
+  updateState(e) {
+     this.setState({data: e.target.value});
   }
 
   render() {
     return (
       <div>
-        <button onClick = {this.setNewNumber}>INCREMENT</button>
-        <Content myNumber = {this.state.data}></Content>
-      </div>
-    );
-  }
-}
-
-class Content extends React.Component {
-  componentWillMount() {
-    console.log("Component WILL MOUNT!!");
-  }
-
-  componentDidMount() {
-    console.log("Component DID MOUNT!!");
-  }
-
-  componentWillReceiveProps(newProps) {
-    console.log("Component WILL RECEIVE PROPS!");
-    console.log("newProps: " + newProps["myNumber"]);
-  }
-
-  shouldComponentUpdate(newProps, newState) {
-    return true;
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    console.log("Component WILL UPDATE!");
-    console.log("nextProps: " + nextProps["myNumber"]);
-    console.log("nextState: " + nextState);
-  }
-
-  componentDidUpdate(prevProps, preveState) {
-    console.log("Component DID UPDATE!");
-    console.log("prevProps: " + prevProps["myNumber"]);
-    console.log("preveState: " + preveState);
-  }
-
-  componentWillUnmount() {
-     console.log('Component WILL UNMOUNT!')
-  }
-
-  render() {
-    return (
-      <div>
-        <h3>{this.props.myNumber}</h3>
+         <input type = "text" value = {this.state.data}
+            onChange = {this.updateState} />
+         <h4>{this.state.data}</h4>
       </div>
     );
   }
