@@ -2,31 +2,71 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class App extends React.Component {
-   constructor() {
-      super();
+  constructor(props) {
+    super(props);
 
-      this.state = {
-         data: 1
-      }
+    this.state = {
+      data: 0
+    }
 
-      this.setStateHandler = this.setStateHandler.bind(this);
-   };
+    this.setNewNumber = this.setNewNumber.bind(this)
+  };
 
-   setStateHandler() {
-      var item = 4
-      var num = this.state.data;
-      var changedNum = num + 1;
-      this.setState({data: changedNum})
-   };
+  setNewNumber() {
+    this.setState({data: this.state.data + 1})
+  }
 
-   render() {
-      return (
-         <div>
-            <button onClick = {this.setStateHandler}>SET STATE</button>
-            <h4>State Array: {this.state.data}</h4>
-         </div>
-      );
-   }
+  render() {
+    return (
+      <div>
+        <button onClick = {this.setNewNumber}>INCREMENT</button>
+        <Content myNumber = {this.state.data}></Content>
+      </div>
+    );
+  }
+}
+
+class Content extends React.Component {
+  componentWillMount() {
+    console.log("Component WILL MOUNT!!");
+  }
+
+  componentDidMount() {
+    console.log("Component DID MOUNT!!");
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log("Component WILL RECEIVE PROPS!");
+    console.log("newProps: " + newProps["myNumber"]);
+  }
+
+  shouldComponentUpdate(newProps, newState) {
+    return true;
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log("Component WILL UPDATE!");
+    console.log("nextProps: " + nextProps["myNumber"]);
+    console.log("nextState: " + nextState);
+  }
+
+  componentDidUpdate(prevProps, preveState) {
+    console.log("Component DID UPDATE!");
+    console.log("prevProps: " + prevProps["myNumber"]);
+    console.log("preveState: " + preveState);
+  }
+
+  componentWillUnmount() {
+     console.log('Component WILL UNMOUNT!')
+  }
+
+  render() {
+    return (
+      <div>
+        <h3>{this.props.myNumber}</h3>
+      </div>
+    );
+  }
 }
 
 export default App;
