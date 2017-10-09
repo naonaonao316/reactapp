@@ -1,49 +1,27 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import {Router, Route, browserHistory, IndexRoute} from 'react-router';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { addTodo } from './actions/actions'
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <ul>
-          <li><Link to = "/home">Home</Link></li>
-          <li><Link to = "/about">About</Link></li>
-          <li><Link to = "/contact">Contact</Link></li>
-        </ul>
-        {this.props.children}
-      </div>
-    )
-  }
-}
+import AddTodo from './components/AddTodo.jsx'
+import TodoList from './components/TodoList.jsx'
 
-export class Home extends React.Component {
+class App extends Component {
    render() {
+      const { dispatch, visibleTodos } = this.props
+
       return (
          <div>
-            <h1>Home...</h1>
+            <AddTodo onAddClick = {text => dispatch(addTodo(text))} />
+            <TodoList todos = {visibleTodos}/>
          </div>
       )
    }
 }
 
-export class About extends React.Component {
-   render() {
-      return (
-         <div>
-            <h1>About...</h1>
-         </div>
-      )
+function select(state) {
+   return {
+      visibleTodos: state.todos
    }
 }
 
-export class Contact extends React.Component {
-   render() {
-      return (
-         <div>
-            <h1>Contact...</h1>
-         </div>
-      )
-   }
-}
+export default connect(select)(App)
